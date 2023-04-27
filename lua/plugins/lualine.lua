@@ -1,47 +1,5 @@
-local null_ls = require("null-ls")
-
-local list_registered_providers_names = function(filetype)
-  local s = require("null-ls.sources")
-  local available_sources = s.get_available(filetype)
-  local registered = {}
-
-  for _, source in ipairs(available_sources) do
-    for method in pairs(source.methods) do
-      registered[method] = registered[method] or {}
-      table.insert(registered[method], source.name)
-    end
-  end
-  return registered
-end
-
-local formatters_list_registered = function(filetype, source_method)
-  local registered_providers = list_registered_providers_names(filetype)
-  return registered_providers[null_ls.methods[source_method]] or {}
-end
-
-local alternative_methods = {
-  null_ls.methods.DIAGNOSTICS,
-  null_ls.methods.DIAGNOSTICS_ON_OPEN,
-  null_ls.methods.DIAGNOSTICS_ON_SAVE,
-}
-
-local alternative_methods_list_registered = function(filetype)
-  local registered_providers = list_registered_providers_names(filetype)
-  local providers_for_methods = vim.tbl_flatten(vim.tbl_map(function(m)
-    return registered_providers[m] or {}
-  end, alternative_methods))
-
-  return providers_for_methods
-end
-
 return {
   {
-    -- {
-    --   "jonahgoldwastaken/copilot-status.nvim",
-    --   dependencies = { "zbirenbaum/copilot.lua" }, -- or "copilot.lua"
-    --   lazy = true,
-    --   event = "BufReadPost",
-    -- },
     {
       "nvim-lualine/lualine.nvim",
       event = "VeryLazy",
@@ -109,9 +67,6 @@ return {
                   removed = icons.git.removed,
                 },
               },
-              -- {
-              --   require("copilot_status").status_string,
-              -- },
               {
                 function(msg)
                   msg = msg or "LS Inactive"
@@ -119,10 +74,10 @@ return {
                   local buf_clients = vim.lsp.get_active_clients()
 
                   if next(buf_clients) == nil then
-                    -- TODO: clean up this if statement
                     if type(msg) == "boolean" or #msg == 0 then
                       return "LS Inactive"
                     end
+
                     return msg
                   end
 
@@ -130,7 +85,7 @@ return {
                   local buf_client_names = {}
                   local copilot_active = false
 
-                  -- -- add client
+                  -- add client
                   for _, client in pairs(buf_clients) do
                     if client.name ~= "null-ls" and client.name ~= "copilot" then
                       table.insert(buf_client_names, client.name)
@@ -141,12 +96,14 @@ return {
                     end
                   end
                   --
-                  -- -- add formatter
-                  local supported_formatters = formatters_list_registered(buf_ft, "FORMATTING")
+                  -- add formatter
+                  local supported_formatters = require("utils.formatters").list_registered(buf_ft)
+                  ---@diagnostic disable-next-line: missing-parameter
                   vim.list_extend(buf_client_names, supported_formatters)
 
                   -- add linter
-                  local supported_linters = alternative_methods_list_registered(buf_ft)
+                  local supported_linters = require("utils.linters").list_registered(buf_ft)
+                  ---@diagnostic disable-next-line: missing-parameter
                   vim.list_extend(buf_client_names, supported_linters)
 
                   local unique_client_names = vim.fn.uniq(buf_client_names)
