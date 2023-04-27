@@ -71,6 +71,7 @@ return {
                 function(msg)
                   msg = msg or "LS Inactive"
 
+                  ---@diagnostic disable-next-line: missing-parameter, deprecated
                   local buf_clients = vim.lsp.buf_get_clients()
 
                   if next(buf_clients) == nil then
