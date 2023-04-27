@@ -17,6 +17,7 @@ return {
       },
       servers = {
         lua_ls = {
+          -- server installed manually behaind stylua
           mason = false,
           settings = {
             Lua = {
