@@ -2,7 +2,11 @@ return {
   {
     "williamboman/mason.nvim",
     opts = {
-      ensure_installed = {},
+      ensure_installed = {
+        "prettierd",
+        "eslint-lsp",
+        "shfmt",
+      },
     },
   },
   {
