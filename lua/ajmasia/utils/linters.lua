@@ -1,6 +1,6 @@
 local M = {}
 
-local service = require("utils.services")
+local service = require("ajmasia.utils.services")
 local null_ls = require("null-ls")
 
 local alternative_methods = {

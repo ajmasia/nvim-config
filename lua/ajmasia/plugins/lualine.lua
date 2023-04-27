@@ -97,12 +97,12 @@ return {
                   end
                   --
                   -- add formatter
-                  local supported_formatters = require("utils.formatters").list_registered(buf_ft)
+                  local supported_formatters = require("ajmasia.utils.formatters").list_registered(buf_ft)
                   ---@diagnostic disable-next-line: missing-parameter
                   vim.list_extend(buf_client_names, supported_formatters)
 
                   -- add linter
-                  local supported_linters = require("utils.linters").list_registered(buf_ft)
+                  local supported_linters = require("ajmasia.utils.linters").list_registered(buf_ft)
                   ---@diagnostic disable-next-line: missing-parameter
                   vim.list_extend(buf_client_names, supported_linters)
 
