@@ -56,3 +56,7 @@ require("lazy").setup({
     },
   },
 })
+
+require("ajmasia.config.options")
+require("ajmasia.config.autocmds")
+require("ajmasia.config.keymaps")
