@@ -10,6 +10,7 @@ end
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("_colorscheme"),
   callback = function()
+    ---@diagnostic disable-next-line: undefined-field
     local statusline_hl = vim.api.nvim_get_hl_by_name("StatusLine", true)
 
     vim.api.nvim_set_hl(0, "SLCopilot", { fg = "#6CC644", bg = statusline_hl.background })

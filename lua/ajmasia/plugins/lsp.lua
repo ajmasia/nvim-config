@@ -33,4 +33,11 @@ return {
       },
     },
   },
+  {
+    "simrat39/symbols-outline.nvim",
+    opts = {
+      width = 30,
+      position = "left",
+    },
+  },
 }

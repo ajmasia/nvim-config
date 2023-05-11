@@ -1,3 +1,7 @@
+function remove_underscores(str)
+  return str:gsub("_", "")
+end
+
 return {
   {
     {
@@ -17,27 +21,25 @@ return {
           },
           sections = {
             lualine_a = { "mode" },
-            lualine_b = { "branch" },
+            lualine_b = {
+              { "branch", icon = "" },
+            },
             lualine_c = {
               {
-                "diagnostics",
+                "diff",
                 symbols = {
-                  error = icons.diagnostics.Error,
-                  warn = icons.diagnostics.Warn,
-                  info = icons.diagnostics.Info,
-                  hint = icons.diagnostics.Hint,
+                  added = icons.git.added,
+                  modified = icons.git.modified,
+                  removed = icons.git.removed,
                 },
               },
-              { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-              { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
               {
-                function()
-                  return require("nvim-navic").get_location()
-                end,
-                cond = function()
-                  return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
-                end,
+                "filename",
+                path = 1,
+                symbols = { modified = "  ", readonly = "", unnamed = "" },
+                icon = "",
               },
+              -- { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
             },
             lualine_x = {
               {
@@ -60,11 +62,12 @@ return {
               },
               { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = Util.fg("Special") },
               {
-                "diff",
+                "diagnostics",
                 symbols = {
-                  added = icons.git.added,
-                  modified = icons.git.modified,
-                  removed = icons.git.removed,
+                  error = icons.diagnostics.Error,
+                  warn = icons.diagnostics.Warn,
+                  info = icons.diagnostics.Info,
+                  hint = icons.diagnostics.Hint,
                 },
               },
               {
@@ -89,7 +92,9 @@ return {
                   -- add client
                   for _, client in pairs(buf_clients) do
                     if client.name ~= "null-ls" and client.name ~= "copilot" then
-                      table.insert(buf_client_names, client.name)
+                      local client_name = remove_underscores(client.name)
+
+                      table.insert(buf_client_names, client_name)
                     end
 
                     if client.name == "copilot" then
@@ -108,22 +113,23 @@ return {
                   vim.list_extend(buf_client_names, supported_linters)
 
                   local unique_client_names = vim.fn.uniq(buf_client_names)
-                  local language_servers = "[" .. table.concat(unique_client_names, ", ") .. "]"
+                  local language_servers = table.concat(unique_client_names, " ") .. " "
 
                   -- copilot status
                   if copilot_active then
-                    language_servers = language_servers .. "%#SLCopilot#" .. " " .. "" .. "%*"
+                    language_servers = language_servers .. "%#SLCopilot#" .. " " .. "" .. " %*"
                   end
 
                   return language_servers
                 end,
-                color = { gui = "bold" },
+                -- color = { fg = "#e0af68" },
+                icon = { "󰒍", color = { fg = "#2ac3de" } },
               },
               { "filetype", cond = nil, padding = { left = 1, right = 1 } },
             },
             lualine_z = {
-              { "progress", separator = " ", padding = { left = 1, right = 0 } },
-              { "location", padding = { left = 0, right = 1 } },
+              -- { "progress", separator = " ", padding = { left = 1, right = 0 } },
+              { "location", padding = { left = 1, right = 1 } },
             },
           },
           extensions = { "neo-tree", "lazy" },
