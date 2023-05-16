@@ -17,10 +17,12 @@ return {
             globalstatus = true,
             disabled_filetypes = { statusline = { "dashboard", "alpha" } },
             component_separators = { left = "", right = "" },
-            section_separators = { left = "", right = "" },
+            section_separators = { left = "", right = "" },
           },
           sections = {
-            lualine_a = { "mode" },
+            lualine_a = {
+              { "mode", padding = { left = 1 } },
+            },
             lualine_b = {
               { "branch", icon = "" },
             },
@@ -125,11 +127,11 @@ return {
                 -- color = { fg = "#e0af68" },
                 icon = { "󰒍", color = { fg = "#2ac3de" } },
               },
-              { "filetype", cond = nil, padding = { left = 1, right = 1 } },
+              { "filetype", cond = nil, padding = { left = 2, right = 1 } },
             },
             lualine_z = {
               -- { "progress", separator = " ", padding = { left = 1, right = 0 } },
-              { "location", padding = { left = 1, right = 1 } },
+              { "location", padding = { right = 1 } },
             },
           },
           extensions = { "neo-tree", "lazy" },

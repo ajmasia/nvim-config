@@ -23,8 +23,8 @@ return {
         dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
         dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
         dashboard.button("g", " " .. " Find text", ":Telescope live_grep <CR>"),
-        dashboard.button("c", " " .. " Config", ":e $MYVIMRC <CR>"),
         dashboard.button("s", " " .. " Restore Session", [[:lua require("persistence").load() <cr>]]),
+        dashboard.button("c", " " .. " Config", ":e $MYVIMRC <CR>"),
       }
 
       for _, button in ipairs(dashboard.section.buttons.val) do
@@ -59,13 +59,25 @@ return {
         callback = function()
           local stats = require("lazy").stats()
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+          local cwd = vim.fn.getcwd()
 
-          dashboard.section.footer.val = "⚡ Neovim loaded "
+          ---@diagnostic disable-next-line: undefined-field
+          local nvim_version_info = vim.api.nvim_command_output("version")
+          local nvim_version = nvim_version_info:match("NVIM v(%d+%.%d+%.%d+)") -- busca la versión en la salida
+
+          dashboard.section.footer.val = "Neovim loaded "
             .. stats.count
             .. " plugins in "
             .. ms
             .. "ms\n\n"
+            .. "Neovim version: "
+            .. nvim_version
+            .. "\n"
+            .. "Working directory: "
+            .. cwd
             .. fortune()
+            .. "\n"
+
           pcall(vim.cmd.AlphaRedraw)
         end,
       })
