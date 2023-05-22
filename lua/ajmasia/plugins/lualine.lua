@@ -1,3 +1,4 @@
+---@diagnostic disable-next-line: lowercase-global
 function remove_underscores(str)
   return str:gsub("_", "")
 end
@@ -17,11 +18,11 @@ return {
             globalstatus = true,
             disabled_filetypes = { statusline = { "dashboard", "alpha" } },
             component_separators = { left = "", right = "" },
-            section_separators = { left = "", right = "" },
+            section_separators = { left = "", right = "" },
           },
           sections = {
             lualine_a = {
-              { "mode", padding = { left = 1 } },
+              { "mode", padding = { left = 1, right = 1 } },
             },
             lualine_b = {
               { "branch", icon = "" },

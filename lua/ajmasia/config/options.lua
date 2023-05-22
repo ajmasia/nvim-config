@@ -4,3 +4,6 @@
 
 vim.opt.swapfile = false
 -- vim.opt.winbar = "%=%m %f"
+vim.opt.showtabline = 1
+
+vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
