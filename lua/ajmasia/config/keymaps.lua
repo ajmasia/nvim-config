@@ -14,7 +14,7 @@ vim.keymap.set(
 
 vim.keymap.set(
   "n",
-  "<leader>nn",
+  "<leader>on",
   "<Esc><cmd>lua require('ajmasia.utils.obsidian').new_note()<CR>",
   { noremap = true, silent = true, desc = "New" }
 )
@@ -22,22 +22,22 @@ vim.keymap.set(
 vim.keymap.set("n", "<leader>nt", "<Esc><cmd>:ObsidianToday<CR>", { noremap = true, silent = true, desc = "Today" })
 vim.keymap.set(
   "n",
-  "<leader>nb",
+  "<leader>ob",
   "<Esc><cmd>:ObsidianBacklinks<CR>",
   { noremap = true, silent = true, desc = "Back Links" }
 )
 vim.keymap.set(
   "n",
-  "<leader>nw",
+  "<leader>ow",
   "<Esc><cmd>:ObsidianQuickSwitch<CR>",
   { noremap = true, silent = true, desc = "Quick Switch" }
 )
 
 vim.keymap.set(
   "n",
-  "<leader>nl",
+  "<leader>ol",
   "<Esc><cmd>:ObsidianLinkNew<CR>",
   { noremap = true, silent = true, desc = "Create link under word" }
 )
 
-vim.keymap.set("n", "<leader>np", "<Esc><cmd>:ObsidianOpen<CR>", { noremap = true, silent = true, desc = "Preview" })
+vim.keymap.set("n", "<leader>op", "<Esc><cmd>:ObsidianOpen<CR>", { noremap = true, silent = true, desc = "Preview" })
