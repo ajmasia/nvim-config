@@ -57,6 +57,9 @@ require("lazy").setup({
   },
 })
 
+require("ajmasia.config.filetypes")
 require("ajmasia.config.options")
 require("ajmasia.config.autocmds")
 require("ajmasia.config.keymaps")
+
+-- vim.treesitter.language.register("markdown", "mdx")

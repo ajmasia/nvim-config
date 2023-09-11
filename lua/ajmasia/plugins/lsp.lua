@@ -40,4 +40,7 @@ return {
       position = "left",
     },
   },
+  {
+    "jxnblk/vim-mdx-js",
+  },
 }
